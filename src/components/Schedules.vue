@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h3>Schedule Summary</h3>
+    <h3>排班汇总</h3>
     <div class="container">
       <!-- Filters -->
       <div class="row mb-4">
         <div class="col-md-3">
-          <label class="form-label">Start Date</label>
+          <label class="form-label">开始日期</label>
           <input
             type="date"
             class="form-control"
@@ -14,7 +14,7 @@
           />
         </div>
         <div class="col-md-3">
-          <label class="form-label">End Date</label>
+          <label class="form-label">结束日期</label>
           <input
             type="date"
             class="form-control"
@@ -23,13 +23,13 @@
           />
         </div>
         <div class="col-md-3">
-          <label class="form-label">Position</label>
+          <label class="form-label">职位</label>
           <select
             class="form-control"
             v-model="filters.position"
             @change="fetchScheduleSummary"
           >
-            <option value="">All Positions</option>
+            <option value="">所有职位</option>
             <option
               v-for="position in availablePositions"
               :key="position.value"
@@ -41,7 +41,7 @@
         </div>
         <div class="col-md-3 d-flex align-items-end">
           <button class="btn btn-primary" @click="fetchScheduleSummary">
-            <i class="bi bi-search me-2"></i>Refresh
+            <i class="bi bi-search me-2"></i>刷新
           </button>
         </div>
       </div>
@@ -63,14 +63,14 @@
 
       <div v-if="!loading && scheduleData.length > 0">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5>Total Schedules: {{ totalSchedules }}</h5>
+          <h5>总排班数: {{ totalSchedules }}</h5>
         </div>
 
         <div class="table-responsive">
           <table class="table table-striped table-bordered">
             <thead class="table-dark">
               <tr>
-                <th class="text-center">Shift Time (Hourly)</th>
+                <th class="text-center">班次时间 (每小时)</th>
                 <th v-for="position in positionLabels" :key="position">{{ position }}</th>
               </tr>
             </thead>

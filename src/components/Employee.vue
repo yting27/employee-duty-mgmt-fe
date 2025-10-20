@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Add Employee</h3>
+    <h3>添加员工</h3>
     <div class="container">
       <form @submit="validateAndSubmit">
         <div v-if="errors.length">
@@ -12,17 +12,17 @@
           {{ message }}
         </div>
         <fieldset class="form-group">
-          <label>Full Name</label>
+          <label>姓名</label>
           <input type="text" class="form-control" v-model="full_name" />
         </fieldset>
         <fieldset class="form-group">
-          <label>Age</label>
+          <label>年龄</label>
           <input type="number" class="form-control" v-model.number="age" />
         </fieldset>
         <fieldset class="form-group">
-          <label>Position</label>
+          <label>职位</label>
           <select class="form-control" v-model="position">
-            <option value="">Select Position</option>
+            <option value="">选择职位</option>
             <option v-for="pos in availablePositions" :key="pos.value" :value="pos.value">
               {{ pos.label }}
             </option>
@@ -31,10 +31,10 @@
 
         <div class="mt-3">
           <button class="btn btn-success me-2" type="submit">
-            <i class="bi bi-calendar-check me-2"></i>Save Employee
+            <i class="bi bi-calendar-check me-2"></i>保存员工
           </button>
           <button class="btn btn-secondary" type="button" @click="$router.push('/employees')">
-            <i class="bi bi-arrow-left me-2"></i>Back
+            <i class="bi bi-arrow-left me-2"></i>返回
           </button>
         </div>
       </form>

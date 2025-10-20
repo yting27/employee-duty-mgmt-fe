@@ -2,13 +2,13 @@
   <div>
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
-        <h3>Schedule Details for {{ getPositionLabel(queryParams.position) }}</h3>
+        <h3>{{ getPositionLabel(queryParams.position) }} 排班详情</h3>
         <p class="text-muted mb-0" v-if="queryParams.datetime && queryParams.position">
-          <i class="bi bi-clock me-2"></i>Working Time: {{ queryParams.datetime }}
+          <i class="bi bi-clock me-2"></i>工作时间: {{ queryParams.datetime }}
         </p>
       </div>
       <button class="btn btn-secondary" @click="goBack">
-        <i class="bi bi-arrow-left me-2"></i>Back to Schedule
+        <i class="bi bi-arrow-left me-2"></i>返回排班表
       </button>
     </div>
 
@@ -26,24 +26,24 @@
 
       <div v-if="!loading && scheduleDetails.length === 0" class="alert alert-warning">
         <i class="bi bi-calendar-x me-2"></i>
-        No employees found for the selected time period.
+        所选时间段内未找到员工。
       </div>
 
       <div v-if="!loading && scheduleDetails.length > 0">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5>Total Employees: {{ totalEmployees }}</h5>
+          <h5>员工总数: {{ totalEmployees }}</h5>
         </div>
 
         <div class="table-responsive">
           <table class="table table-striped table-bordered">
             <thead class="table-dark">
               <tr>
-                <th>Employee Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Duration</th>
+                <th>员工姓名</th>
+                <th>开始日期</th>
+                <th>结束日期</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>工作时长</th>
               </tr>
             </thead>
             <tbody>

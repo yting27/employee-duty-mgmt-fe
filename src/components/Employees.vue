@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <h3>All Employees</h3>
+    <h3>所有员工</h3>
     <div v-if="message" class="alert alert-success">{{ this.message }}</div>
     <div class="container">
       <table class="table table-striped table-bordered">
         <thead class="table-dark">
           <tr>
-            <th>No.</th>
-            <th>Full Name</th>
-            <th>Age</th>
-            <th>Position</th>
-            <th>Actions</th>
-            <th>Schedule</th>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>职位</th>
+            <th>操作</th>
+            <th>排班</th>
           </tr>
         </thead>
         <tbody>
@@ -38,7 +38,7 @@
       </table>
       <div class="row">
         <button class="btn btn-success" v-on:click="addEmployee()">
-          <i class="bi bi-plus-circle me-2"></i>Add Employee
+          <i class="bi bi-plus-circle me-2"></i>添加员工
         </button>
       </div>
     </div>

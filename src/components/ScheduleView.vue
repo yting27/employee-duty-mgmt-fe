@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h3>Employee Schedule</h3>
+    <h3>员工排班</h3>
     <div class="container">
       <div v-if="employee" class="alert alert-info">
         <i class="bi bi-person-circle me-2"></i>
-        Schedule for: <strong>{{ employee.full_name }}</strong> ({{ employee.position }})
+        排班表: <strong>{{ employee.full_name }}</strong> ({{ employee.position }})
       </div>
 
       <div v-if="loading" class="text-center">
@@ -19,26 +19,26 @@
 
       <div v-if="!loading && schedules.length === 0" class="alert alert-warning">
         <i class="bi bi-calendar-x me-2"></i>
-        No schedules found for this employee.
+        该员工暂无排班记录。
       </div>
 
       <div v-if="!loading && schedules.length > 0">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5>Schedule Details ({{ schedules.length }} entries)</h5>
+          <h5>排班详情 (共 {{ schedules.length }} 条记录)</h5>
           <button class="btn btn-primary" @click="addSchedule">
-            <i class="bi bi-plus-circle me-2"></i>Add New Schedule
+            <i class="bi bi-plus-circle me-2"></i>添加新排班
           </button>
         </div>
 
         <table class="table table-striped table-bordered">
           <thead class="table-dark">
             <tr>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Start Time</th>
-              <th>End Time</th>
-              <th>Duration</th>
-              <th>Actions</th>
+              <th>开始日期</th>
+              <th>结束日期</th>
+              <th>开始时间</th>
+              <th>结束时间</th>
+              <th>工作时长</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
@@ -64,7 +64,7 @@
 
       <div class="mt-3">
         <button class="btn btn-secondary" @click="goBack">
-          <i class="bi bi-arrow-left me-2"></i>Back
+          <i class="bi bi-arrow-left me-2"></i>返回
         </button>
       </div>
     </div>

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h3>Add Employee Schedule</h3>
+    <h3>添加员工排班</h3>
     <div class="container">
       <div v-if="employee" class="alert alert-info">
         <i class="bi bi-person-circle me-2"></i>
-        Adding schedule for: <strong>{{ employee.full_name }}</strong> ({{ employee.position }})
+        为以下员工添加排班: <strong>{{ employee.full_name }}</strong> ({{ employee.position }})
       </div>
 
       <form @submit="validateAndSubmit">
@@ -21,7 +21,7 @@
         <div class="row">
           <div class="col-md-6">
             <fieldset class="form-group">
-              <label>Start Date</label>
+              <label>开始日期</label>
               <input
                 type="date"
                 class="form-control"
@@ -32,7 +32,7 @@
           </div>
           <div class="col-md-6">
             <fieldset class="form-group">
-              <label>End Date</label>
+              <label>结束日期</label>
               <input
                 type="date"
                 class="form-control"
@@ -46,7 +46,7 @@
         <div class="row">
           <div class="col-md-6">
             <fieldset class="form-group">
-              <label>Start Time</label>
+              <label>开始时间</label>
               <input
                 type="time"
                 class="form-control"
@@ -57,7 +57,7 @@
           </div>
           <div class="col-md-6">
             <fieldset class="form-group">
-              <label>End Time</label>
+              <label>结束时间</label>
               <input
                 type="time"
                 class="form-control"
@@ -70,10 +70,10 @@
 
         <div class="mt-3">
           <button class="btn btn-success me-2" type="submit">
-            <i class="bi bi-calendar-check me-2"></i>Save Schedule
+            <i class="bi bi-calendar-check me-2"></i>保存排班
           </button>
           <button class="btn btn-secondary" type="button" @click="goBack">
-            <i class="bi bi-arrow-left me-2"></i>Back
+            <i class="bi bi-arrow-left me-2"></i>返回
           </button>
         </div>
       </form>

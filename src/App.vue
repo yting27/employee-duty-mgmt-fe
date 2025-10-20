@@ -4,7 +4,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <router-link class="navbar-brand" to="/">
-          Employee Duty System
+          值班管理系统
         </router-link>
 
         <button
@@ -24,13 +24,13 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/employees" active-class="active">
                 <i class="bi bi-people me-1"></i>
-                Employees
+                人员
               </router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/schedules" active-class="active">
                 <i class="bi bi-calendar-check me-1"></i>
-                Schedule
+                排班
               </router-link>
             </li>
           </ul>

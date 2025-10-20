@@ -1,5 +1,7 @@
 # Employee Duty Management System (Frontend)
 
+Vue.js Sample Code
+
 ## Getting Started
 
 Make sure the backend server is running. Please refer to README.md of [`employee-duty-mgmt-be`](https://github.com/yting27/employee-duty-mgmt-be) repo.

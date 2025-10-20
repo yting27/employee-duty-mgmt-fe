@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-Make sure the backend server is running. Checkout README.md of `duty_management` repo.
+Make sure the backend server is running. Please refer to README.md of [`employee-duty-mgmt-be`](https://github.com/yting27/employee-duty-mgmt-be) repo.
 
 ```bash
 # Node version >=22.12.0

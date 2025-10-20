@@ -22,20 +22,6 @@ class EmployeeDataService {
     createEmployee(employee) {
         return axios.post(`${BACKEND_URL}/employee`, employee);
     }
-
-    getJobPositions() {
-        return [
-            { value: 'DRIVER', label: 'Driver' },
-            { value: 'CHEF', label: 'Chef' },
-            { value: 'WAITER', label: 'Waiter' },
-            { value: 'MANAGER', label: 'Manager' },
-            { value: 'CLEANER', label: 'Cleaner' },
-            { value: 'OPERATOR', label: 'Operator' },
-            { value: 'TECHNICIAN', label: 'Technician' },
-            { value: 'CUSTOMER_SERVICE', label: 'Customer Service' },
-            { value: 'SECURITY_GUARD', label: 'Security Guard' },
-        ];
-    }
 }
 
 export default new EmployeeDataService()

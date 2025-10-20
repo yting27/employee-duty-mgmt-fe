@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>添加员工</h3>
+    <h3>{{ $t('add_employee_title') }}</h3>
     <div class="container">
       <form @submit="validateAndSubmit">
         <div v-if="errors.length">
@@ -12,18 +12,18 @@
           {{ message }}
         </div>
         <fieldset class="form-group">
-          <label>姓名</label>
+          <label>{{ $t('full_name') }}</label>
           <input type="text" class="form-control" v-model="full_name" />
         </fieldset>
         <fieldset class="form-group">
-          <label>年龄</label>
+          <label>{{ $t('age') }}</label>
           <input type="number" class="form-control" v-model.number="age" />
         </fieldset>
         <fieldset class="form-group">
-          <label>职位</label>
+          <label>{{ $t('position') }}</label>
           <select class="form-control" v-model="position">
-            <option value="">选择职位</option>
-            <option v-for="pos in availablePositions" :key="pos.value" :value="pos.value">
+            <option value="">{{ $t('select_position') }}</option>
+            <option v-for="pos in getJobPositions()" :key="pos.value" :value="pos.value">
               {{ pos.label }}
             </option>
           </select>
@@ -31,10 +31,10 @@
 
         <div class="mt-3">
           <button class="btn btn-success me-2" type="submit">
-            <i class="bi bi-calendar-check me-2"></i>保存员工
+            <i class="bi bi-calendar-check me-2"></i>{{ $t('save_employee') }}
           </button>
           <button class="btn btn-secondary" type="button" @click="$router.push('/employees')">
-            <i class="bi bi-arrow-left me-2"></i>返回
+            <i class="bi bi-arrow-left me-2"></i>{{ $t('back') }}
           </button>
         </div>
       </form>
@@ -43,9 +43,11 @@
 </template>
 <script>
 import EmployeeDataService from '../services/EmployeeDataService'
+import LanguageMixin from '../mixins/LanguageMixin'
 
 export default {
   name: 'EmployeeDetails',
+  mixins: [LanguageMixin],
   data() {
     return {
       full_name: '',
@@ -53,17 +55,6 @@ export default {
       position: '',
       errors: [],
       message: '',
-      availablePositions: [
-        { value: 'DRIVER', label: 'Driver' },
-        { value: 'CHEF', label: 'Chef' },
-        { value: 'WAITER', label: 'Waiter' },
-        { value: 'MANAGER', label: 'Manager' },
-        { value: 'CLEANER', label: 'Cleaner' },
-        { value: 'OPERATOR', label: 'Operator' },
-        { value: 'TECHNICIAN', label: 'Technician' },
-        { value: 'CUSTOMER_SERVICE', label: 'Customer Service' },
-        { value: 'SECURITY_GUARD', label: 'Security Guard' },
-      ],
     }
   },
   computed: {
@@ -81,6 +72,7 @@ export default {
         })
       }
     },
+
     validateAndSubmit(e) {
       e.preventDefault()
       this.errors = []
@@ -139,6 +131,7 @@ export default {
       }
     },
   },
+
   created() {
     this.refreshEmployeeDetails()
   },

@@ -1,10 +1,12 @@
 <template>
   <div>
-    <h3>添加员工排班</h3>
+    <h3>{{ $t('add_employee_schedule') }}</h3>
     <div class="container">
       <div v-if="employee" class="alert alert-info">
         <i class="bi bi-person-circle me-2"></i>
-        为以下员工添加排班: <strong>{{ employee.full_name }}</strong> ({{ employee.position }})
+        {{ $t('adding_schedule_for') }} <strong>{{ employee.full_name }}</strong> ({{
+          getPositionLabel(employee.position)
+        }})
       </div>
 
       <form @submit="validateAndSubmit">
@@ -21,24 +23,14 @@
         <div class="row">
           <div class="col-md-6">
             <fieldset class="form-group">
-              <label>开始日期</label>
-              <input
-                type="date"
-                class="form-control"
-                v-model="start_date"
-                required
-              />
+              <label>{{ $t('start_date') }}</label>
+              <input type="date" class="form-control" v-model="start_date" required />
             </fieldset>
           </div>
           <div class="col-md-6">
             <fieldset class="form-group">
-              <label>结束日期</label>
-              <input
-                type="date"
-                class="form-control"
-                v-model="end_date"
-                required
-              />
+              <label>{{ $t('end_date') }}</label>
+              <input type="date" class="form-control" v-model="end_date" required />
             </fieldset>
           </div>
         </div>
@@ -46,34 +38,24 @@
         <div class="row">
           <div class="col-md-6">
             <fieldset class="form-group">
-              <label>开始时间</label>
-              <input
-                type="time"
-                class="form-control"
-                v-model="start_time"
-                required
-              />
+              <label>{{ $t('start_time') }}</label>
+              <input type="time" class="form-control" v-model="start_time" required />
             </fieldset>
           </div>
           <div class="col-md-6">
             <fieldset class="form-group">
-              <label>结束时间</label>
-              <input
-                type="time"
-                class="form-control"
-                v-model="end_time"
-                required
-              />
+              <label>{{ $t('end_time') }}</label>
+              <input type="time" class="form-control" v-model="end_time" required />
             </fieldset>
           </div>
         </div>
 
         <div class="mt-3">
           <button class="btn btn-success me-2" type="submit">
-            <i class="bi bi-calendar-check me-2"></i>保存排班
+            <i class="bi bi-calendar-check me-2"></i>{{ $t('save_schedule') }}
           </button>
           <button class="btn btn-secondary" type="button" @click="goBack">
-            <i class="bi bi-arrow-left me-2"></i>返回
+            <i class="bi bi-arrow-left me-2"></i>{{ $t('back') }}
           </button>
         </div>
       </form>
@@ -84,9 +66,11 @@
 <script>
 import EmployeeDataService from '../services/EmployeeDataService'
 import ScheduleDataService from '../services/ScheduleDataService'
+import LanguageMixin from '../mixins/LanguageMixin'
 
 export default {
   name: 'ScheduleCreate',
+  mixins: [LanguageMixin],
   data() {
     return {
       employee: null,
@@ -141,7 +125,12 @@ export default {
       }
 
       // Time validation for same day
-      if (this.start_date === this.end_date && this.start_time && this.end_time && this.start_time >= this.end_time) {
+      if (
+        this.start_date === this.end_date &&
+        this.start_time &&
+        this.end_time &&
+        this.start_time >= this.end_time
+      ) {
         this.errors.push('Start time must be before end time on the same day')
       }
 
@@ -158,7 +147,7 @@ export default {
           end_date: this.end_date,
           start_time: this.formatTimeToISO(this.start_time),
           end_time: this.formatTimeToISO(this.end_time),
-          employee_id: this.employeeId
+          employee_id: this.employeeId,
         }
 
         // Use the ScheduleDataService
@@ -171,7 +160,6 @@ export default {
         // Notify user of successful save
         this.message = 'Schedule saved successfully!'
         this.goBack()
-
       } catch (err) {
         if (err.response && err.response.data && err.response.data.detail) {
           this.errors.push(err.response.data.detail)
@@ -196,10 +184,14 @@ export default {
       }
     },
 
+    getPositionLabel(position) {
+      return this.$t('position.' + position) || position
+    },
+
     goBack() {
       // Go back to previous page (one level back)
       this.$router.go(-1)
-    }
+    },
   },
 
   async created() {

@@ -1,10 +1,12 @@
 <template>
   <div>
-    <h3>员工排班</h3>
+    <h3>{{ $t('employee_schedule') }}</h3>
     <div class="container">
       <div v-if="employee" class="alert alert-info">
         <i class="bi bi-person-circle me-2"></i>
-        排班表: <strong>{{ employee.full_name }}</strong> ({{ employee.position }})
+        {{ $t('schedule_for') }} <strong>{{ employee.full_name }}</strong> ({{
+          getPositionLabel(employee.position)
+        }})
       </div>
 
       <div v-if="loading" class="text-center">
@@ -19,26 +21,26 @@
 
       <div v-if="!loading && schedules.length === 0" class="alert alert-warning">
         <i class="bi bi-calendar-x me-2"></i>
-        该员工暂无排班记录。
+        {{ $t('no_schedules_found') }}
       </div>
 
       <div v-if="!loading && schedules.length > 0">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5>排班详情 (共 {{ schedules.length }} 条记录)</h5>
+          <h5>{{ $t('schedule_details_count', { count: schedules.length }) }}</h5>
           <button class="btn btn-primary" @click="addSchedule">
-            <i class="bi bi-plus-circle me-2"></i>添加新排班
+            <i class="bi bi-plus-circle me-2"></i>{{ $t('add_new_schedule') }}
           </button>
         </div>
 
         <table class="table table-striped table-bordered">
           <thead class="table-dark">
             <tr>
-              <th>开始日期</th>
-              <th>结束日期</th>
-              <th>开始时间</th>
-              <th>结束时间</th>
-              <th>工作时长</th>
-              <th>操作</th>
+              <th>{{ $t('start_date') }}</th>
+              <th>{{ $t('end_date') }}</th>
+              <th>{{ $t('start_time') }}</th>
+              <th>{{ $t('end_time') }}</th>
+              <th>{{ $t('duration') }}</th>
+              <th>{{ $t('actions') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -64,7 +66,7 @@
 
       <div class="mt-3">
         <button class="btn btn-secondary" @click="goBack">
-          <i class="bi bi-arrow-left me-2"></i>返回
+          <i class="bi bi-arrow-left me-2"></i>{{ $t('back') }}
         </button>
       </div>
     </div>
@@ -74,9 +76,11 @@
 <script>
 import EmployeeDataService from '../services/EmployeeDataService'
 import ScheduleDataService from '../services/ScheduleDataService'
+import LanguageMixin from '../mixins/LanguageMixin'
 
 export default {
   name: 'ScheduleView',
+  mixins: [LanguageMixin],
   data() {
     return {
       employee: null,
@@ -121,7 +125,7 @@ export default {
       return date.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
-        day: 'numeric'
+        day: 'numeric',
       })
     },
 
@@ -141,7 +145,7 @@ export default {
         durationMinutes = endTime - startTime
       } else {
         // Overnight shift (crosses midnight)
-        durationMinutes = (24 * 60) - startTime + endTime
+        durationMinutes = 24 * 60 - startTime + endTime
       }
 
       // Convert to hours and minutes
@@ -176,10 +180,14 @@ export default {
       this.$router.push(`/employee/${this.employeeId}/schedule/add`)
     },
 
+    getPositionLabel(position) {
+      return this.$t('position.' + position) || position
+    },
+
     goBack() {
       // Go back to previous page (one level back)
       this.$router.go(-1)
-    }
+    },
   },
 
   async created() {

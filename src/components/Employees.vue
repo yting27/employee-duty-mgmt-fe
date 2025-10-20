@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <h3>所有员工</h3>
+    <h3>{{ $t('all_employees') }}</h3>
     <div v-if="message" class="alert alert-success">{{ this.message }}</div>
     <div class="container">
       <table class="table table-striped table-bordered">
         <thead class="table-dark">
           <tr>
-            <th>序号</th>
-            <th>姓名</th>
-            <th>年龄</th>
-            <th>职位</th>
-            <th>操作</th>
-            <th>排班</th>
+            <th>{{ $t('employee_no') }}</th>
+            <th>{{ $t('full_name') }}</th>
+            <th>{{ $t('age') }}</th>
+            <th>{{ $t('position') }}</th>
+            <th>{{ $t('actions') }}</th>
+            <th>{{ $t('schedule') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -19,17 +19,29 @@
             <td>{{ index + 1 }}</td>
             <td>{{ employee.full_name }}</td>
             <td>{{ employee.age }}</td>
-            <td>{{ employee.position }}</td>
+            <td>{{ getPositionLabel(employee.position) }}</td>
             <td>
-              <button class="btn btn-danger btn-sm" v-on:click="deleteEmployee(employee.id)" title="Delete">
+              <button
+                class="btn btn-danger btn-sm"
+                v-on:click="deleteEmployee(employee.id)"
+                title="Delete"
+              >
                 <i class="bi bi-trash"></i>
               </button>
             </td>
             <td>
-              <button class="btn btn-primary btn-sm me-2" v-on:click="editSchedule(employee.id)" title="Add Schedule">
+              <button
+                class="btn btn-primary btn-sm me-2"
+                v-on:click="addSchedule(employee.id)"
+                title="Add Schedule"
+              >
                 <i class="bi bi-calendar-plus"></i>
               </button>
-              <button class="btn btn-info btn-sm" v-on:click="viewSchedule(employee.id)" title="View Schedule">
+              <button
+                class="btn btn-info btn-sm"
+                v-on:click="viewSchedule(employee.id)"
+                title="View Schedule"
+              >
                 <i class="bi bi-eye"></i>
               </button>
             </td>
@@ -37,8 +49,8 @@
         </tbody>
       </table>
       <div class="row">
-        <button class="btn btn-success" v-on:click="addEmployee()">
-          <i class="bi bi-plus-circle me-2"></i>添加员工
+        <button class="btn btn-primary" v-on:click="addEmployee()">
+          <i class="bi bi-plus-circle me-2"></i>{{ $t('add_employee') }}
         </button>
       </div>
     </div>
@@ -46,9 +58,11 @@
 </template>
 <script>
 import EmployeeDataService from '../services/EmployeeDataService'
+import LanguageMixin from '../mixins/LanguageMixin'
 
 export default {
   name: 'EmployeesList',
+  mixins: [LanguageMixin],
   data() {
     return {
       employees: [],
@@ -61,9 +75,11 @@ export default {
         this.employees = res.data.data
       })
     },
+
     addEmployee() {
       this.$router.push(`/employee/-1`)
     },
+
     deleteEmployee(id) {
       // TODO: create confirmation popup later
       if (confirm('Are you sure you want to delete this employee?')) {
@@ -72,11 +88,17 @@ export default {
         })
       }
     },
-    editSchedule(id) {
+
+    addSchedule(id) {
       this.$router.push(`/employee/${id}/schedule/add`)
     },
+
     viewSchedule(id) {
       this.$router.push(`/employee/${id}/schedule`)
+    },
+
+    getPositionLabel(position) {
+      return this.$t('position.' + position) || position
     },
   },
   created() {

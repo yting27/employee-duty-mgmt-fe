@@ -2,10 +2,10 @@
 
 ## Getting Started
 
-Make sure backend server is running. Checkout `duty_management` repo.
+Make sure the backend server is running. Checkout README.md of `duty_management` repo.
 
 ```bash
-# make sure node version >=22.12.0
+# Node version >=22.12.0
 npm install
-npm run dev
+npm run dev # Ensure the app is running at port 5173
 ```

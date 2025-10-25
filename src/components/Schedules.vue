@@ -24,16 +24,12 @@
         </div>
         <div class="col-md-3">
           <label class="form-label">{{ $t('employee.position') }}</label>
-          <select class="form-control" v-model="filters.position" @change="fetchScheduleSummary">
-            <option value="">{{ $t('schedule.allPositions') }}</option>
-            <option
-              v-for="position in availablePositions"
-              :key="position.value"
-              :value="position.value"
-            >
-              {{ position.label }}
-            </option>
-          </select>
+          <MultiSelectDropdown
+            v-model="filters.positions"
+            :options="availablePositions"
+            :placeholder="$t('schedule.allPositions')"
+            @change="fetchScheduleSummary"
+          />
         </div>
         <div class="col-md-3 d-flex align-items-end">
           <button class="btn btn-primary" @click="fetchScheduleSummary">
@@ -67,7 +63,7 @@
             <thead class="table-dark">
               <tr>
                 <th class="text-center">{{ $t('schedule.shiftTime') }}</th>
-                <th v-for="position in positionLabels" :key="position">{{ position }}</th>
+                <th v-for="position in filteredPositions" :key="position.value">{{ position.label }}</th>
               </tr>
             </thead>
             <tbody>
@@ -76,7 +72,7 @@
                   <strong>{{ row.datetime }}</strong>
                 </td>
                 <td
-                  v-for="position in availablePositions"
+                  v-for="position in filteredPositions"
                   :key="position.value"
                   class="text-center"
                 >
@@ -102,10 +98,14 @@
 <script>
 import ScheduleDataService from '../services/ScheduleDataService'
 import LanguageMixin from '../mixins/LanguageMixin'
+import MultiSelectDropdown from './MultiSelectDropdown.vue'
 
 export default {
   name: 'Schedules',
   mixins: [LanguageMixin],
+  components: {
+    MultiSelectDropdown
+  },
   data() {
     return {
       scheduleData: [],
@@ -115,7 +115,7 @@ export default {
       filters: {
         start_date: '',
         end_date: '',
-        position: '',
+        positions: [], // Changed to array for multi-select
       },
       availablePositions: [],
       positionLabels: [],
@@ -129,6 +129,15 @@ export default {
         staffing: item.staffing,
       }))
     },
+    filteredPositions() {
+      // If positions are selected, show only those; otherwise show all
+      if (this.filters.positions && this.filters.positions.length > 0) {
+        return this.availablePositions.filter(pos =>
+          this.filters.positions.includes(pos.value)
+        )
+      }
+      return this.availablePositions
+    },
   },
   methods: {
     async fetchScheduleSummary() {
@@ -139,7 +148,6 @@ export default {
         const params = {}
         if (this.filters.start_date) params.start_date = this.filters.start_date
         if (this.filters.end_date) params.end_date = this.filters.end_date
-        if (this.filters.position) params.position = this.filters.position
 
         const response = await ScheduleDataService.getScheduleSummary(params)
         this.scheduleData = response.data.hourly_staffing_by_position || []
@@ -206,3 +214,4 @@ export default {
   font-size: 0.9rem;
 }
 </style>
+

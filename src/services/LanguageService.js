@@ -69,6 +69,9 @@ class LanguageService {
         'common.add': '添加',
         'common.actions': '操作',
         'common.search': '搜索',
+        'common.holdCtrlToSelectMultiple': '按住 Ctrl 键可选择多个',
+        'common.selected': '已选择',
+        'common.selectAll': '全选',
 
         // Job Positions
         'position.DRIVER': '司机',
@@ -148,6 +151,9 @@ class LanguageService {
         'common.add': 'Add',
         'common.actions': 'Actions',
         'common.search': 'Search',
+        'common.holdCtrlToSelectMultiple': 'Hold Ctrl to select multiple',
+        'common.selected': 'Selected',
+        'common.selectAll': 'Select All',
 
         // Job Positions
         'position.DRIVER': 'Driver',
